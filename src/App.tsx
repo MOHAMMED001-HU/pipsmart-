@@ -22,6 +22,7 @@ import {
 import { Capacitor } from '@capacitor/core';
 import {
   AdMob,
+  AdmobConsentStatus,
   BannerAdPosition,
   BannerAdSize,
 } from '@capacitor-community/admob';
@@ -195,27 +196,32 @@ function readTrades(): Trade[] {
   }
 }
 function App() {
-  const admobStarted = useRef(false);
+  
+      const admobStarted = useRef(false);
 
   useEffect(() => {
-    if (!Capacitor.isNativePlatform() || admobStarted.current) {
-      return;
-    }
+    if (!Capacitor.isNativePlatform() || admobStarted.current) return;
 
-    admobStarted.current = true;
+    const timer = window.setTimeout(async () => {
+      if (admobStarted.current) return;
+      admobStarted.current = true;
 
-    const startAdMob = async () => {
       try {
+        console.log('PipSmart: Starting AdMob');
+
         let consentInfo = await AdMob.requestConsentInfo();
 
         if (
           consentInfo.isConsentFormAvailable &&
-          consentInfo.status === 'REQUIRED'
+          consentInfo.status === AdmobConsentStatus.REQUIRED
         ) {
           consentInfo = await AdMob.showConsentForm();
         }
 
-        if (!consentInfo.canRequestAds) return;
+        if (!consentInfo.canRequestAds) {
+          console.log('PipSmart: Ads cannot be requested yet');
+          return;
+        }
 
         await AdMob.initialize();
 
@@ -226,12 +232,14 @@ function App() {
           margin: 0,
           isTesting: true,
         });
-      } catch (error) {
-        console.error('AdMob error:', error);
-      }
-    };
 
-    void startAdMob();
+        console.log('PipSmart: Banner request sent');
+      } catch (error) {
+        console.error('PipSmart AdMob error:', error);
+      }
+    }, 1500);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   const [tab, setTab] = useState<Tab>('Overview');
