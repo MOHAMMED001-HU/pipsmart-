@@ -63,6 +63,8 @@ jobs:
 
           cat > android/app/src/main/res/values/strings.xml <<'EOF'
           <resources>
+              <string name="app_name">pipSmart</string>
+              <string name="title_activity_main">pipSmart</string>
               <string name="admob_app_id">ca-app-pub-4483717100691601~1691493134</string>
           </resources>
           EOF
