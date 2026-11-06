@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import DemoTrading from './DemoTrading';
 import MarketEngine from './MarketEngine';
 import {
@@ -19,7 +19,12 @@ import {
   Trash2,
   Wallet,
 } from 'lucide-react';
-
+import { Capacitor } from '@capacitor/core';
+import {
+  AdMob,
+  BannerAdPosition,
+  BannerAdSize,
+} from '@capacitor-community/admob';
 type Trade = {
   id: number;
   pair: string;
@@ -189,9 +194,48 @@ function readTrades(): Trade[] {
     return seedTrades;
   }
 }
-
 function App() {
+  const admobStarted = useRef(false);
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform() || admobStarted.current) {
+      return;
+    }
+
+    admobStarted.current = true;
+
+    const startAdMob = async () => {
+      try {
+        let consentInfo = await AdMob.requestConsentInfo();
+
+        if (
+          consentInfo.isConsentFormAvailable &&
+          consentInfo.status === 'REQUIRED'
+        ) {
+          consentInfo = await AdMob.showConsentForm();
+        }
+
+        if (!consentInfo.canRequestAds) return;
+
+        await AdMob.initialize();
+
+        await AdMob.showBanner({
+          adId: 'ca-app-pub-3940256099942544/6300978111',
+          adSize: BannerAdSize.ADAPTIVE_BANNER,
+          position: BannerAdPosition.BOTTOM_CENTER,
+          margin: 0,
+          isTesting: true,
+        });
+      } catch (error) {
+        console.error('AdMob error:', error);
+      }
+    };
+
+    void startAdMob();
+  }, []);
+
   const [tab, setTab] = useState<Tab>('Overview');
+
   const [trades, setTrades] = useState<Trade[]>(readTrades);
   const [showForm, setShowForm] = useState(false);
   const [pair, setPair] = useState('EUR/USD');
