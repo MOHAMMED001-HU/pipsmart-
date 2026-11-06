@@ -1,0 +1,19 @@
+{
+  "name": "pipSmart — Learn. Practice. Trade Smarter.",
+  "short_name": "pipSmart",
+  "description": "A forex learning, risk-awareness and demo trading journal for learners everywhere.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1018",
+  "theme_color": "#0b1018",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "./pipsmart-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

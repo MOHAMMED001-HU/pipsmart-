@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Use the simulated market chart and shared demo prices",
+    "sanity": true,
+    "viewport": "mobile",
+    "covers": [
+      "simulated candlestick chart",
+      "automatic practice price updates",
+      "RSI indicator",
+      "moving average indicator",
+      "shared market feed with demo terminal"
+    ],
+    "description": "Verifies the free simulated chart displays candles and indicators and the demo terminal consumes the shared practice prices.",
+    "steps": [
+      "Open Market and view the EUR/USD simulated candlestick chart",
+      "Observe the practice price and indicator values",
+      "Open Demo trading and confirm the selected pair has a shared practice price that updates automatically"
+    ],
+    "expected": "The chart shows simulated candles, RSI and a moving average; the demo terminal displays automatically updating practice prices and clearly labels them as simulated."
+  },
+  {
+    "name": "Start with a clean journal and save a practice trade",
+    "viewport": "desktop",
+    "covers": [
+      "empty first-run dashboard",
+      "trade journal create",
+      "trade data persistence",
+      "overview trade metrics"
+    ],
+    "description": "Verifies a first-time learner sees no invented trading history and can save a real practice journal entry.",
+    "steps": [
+      "Open Overview with no saved journal entries",
+      "Open Trade journal and add a EUR/USD Buy practice trade with valid values",
+      "Save the trade and refresh the page"
+    ],
+    "expected": "The saved EUR/USD practice trade remains visible after refresh and the overview reflects the journal entry."
+  },
+  {
+    "name": "Calculate approximate position size from risk inputs",
+    "viewport": "desktop",
+    "covers": [
+      "risk calculator",
+      "cash risk calculation",
+      "approximate lot size",
+      "calculator assumptions disclosure"
+    ],
+    "description": "Verifies risk inputs update the estimate and assumptions remain visible.",
+    "steps": [
+      "Open Risk calculator",
+      "Set balance to 10000, risk to 1 percent and stop distance to 20 pips"
+    ],
+    "expected": "Cash risk shows $100.00, suggested size is approximately 0.50 lots, and pip-value assumptions are disclosed."
+  },
+  {
+    "name": "Reject invalid practice trade values on mobile",
+    "viewport": "mobile",
+    "covers": [
+      "trade form validation",
+      "invalid trade guardrail",
+      "mobile trade journal"
+    ],
+    "description": "Verifies invalid prices are rejected without adding a journal entry.",
+    "steps": [
+      "Open Trade journal on mobile",
+      "Choose Add trade, clear entry price and submit"
+    ],
+    "expected": "A validation message appears and no invalid trade is added."
+  },
+  {
+    "name": "Complete Academy lessons and retain progress",
+    "viewport": "mobile",
+    "covers": [
+      "12-lesson forex academy",
+      "lesson content and practice tasks",
+      "lesson completion tracking",
+      "progress persistence after reload"
+    ],
+    "description": "Verifies learners can study lessons, mark them complete and retain progress.",
+    "steps": [
+      "Open Academy and review lesson 01",
+      "Mark lesson 01 complete",
+      "Refresh and return to Academy"
+    ],
+    "expected": "Lesson 01 remains completed and progress displays one of twelve lessons."
+  }
+]
