@@ -1,3 +1,4 @@
+
 name: Build pipSmart Android APK
 
 on:
@@ -29,12 +30,17 @@ jobs:
         run: npm install --package-lock=false
 
       - name: Install Capacitor
-        run: npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
+        run: npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7 --package-lock=false
+
+      - name: Install AdMob
+        run: npm install @capacitor-community/admob@7 --package-lock=false
+
       - name: Check source files
         run: |
           pwd
           ls -la
           ls -la src
+
       - name: Build website
         run: npm run build -- --base=./
 
@@ -49,7 +55,40 @@ jobs:
           };
           export default config;
           EOF
+
           npx cap add android
+          npx cap sync android
+
+          mkdir -p android/app/src/main/res/values
+
+          cat > android/app/src/main/res/values/strings.xml <<'EOF'
+          <resources>
+              <string name="admob_app_id">ca-app-pub-4483717100691601~1691493134</string>
+          </resources>
+          EOF
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path("android/app/src/main/AndroidManifest.xml")
+          s = p.read_text()
+
+          marker = "<application"
+          start = s.find(marker)
+          end = s.find(">", start)
+
+          if start < 0 or end < 0:
+              raise SystemExit("Could not find Android application tag")
+
+          if "com.google.android.gms.ads.APPLICATION_ID" not in s:
+              s = s[:end+1] + '''
+                  <meta-data
+                      android:name="com.google.android.gms.ads.APPLICATION_ID"
+                      android:value="@string/admob_app_id" />
+              ''' + s[end+1:]
+
+          p.write_text(s)
+          PY
 
       - name: Build APK
         run: |
@@ -62,5 +101,4 @@ jobs:
         with:
           name: pipSmart-Android-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
-                
-        
+          
