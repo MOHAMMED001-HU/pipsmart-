@@ -213,7 +213,7 @@ useEffect(() => {
 
       let consentInfo = await AdMob.requestConsentInfo();
 
-      console.log('PipSmart consent:', consentInfo);
+      alert('PipSmart consent: ' + JSON.stringify(consentInfo));
 
       if (
         consentInfo.isConsentFormAvailable &&
