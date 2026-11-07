@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from 'react';
+seeimport { useEffect, useMemo, useState, useRef } from 'react';
 import DemoTrading from './DemoTrading';
 import MarketEngine from './MarketEngine';
 import {
@@ -201,7 +201,7 @@ function App() {
       const admobStarted = useRef(false);
 
   
-useEffect(() => {
+useEffect(() => {,alert('PipSmart AdMob diagnostic started'); 
   if (!Capacitor.isNativePlatform() || admobStarted.current) return;
 
   const timer = window.setTimeout(async () => {
