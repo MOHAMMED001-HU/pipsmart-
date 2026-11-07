@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from 'react';
+uimport { useEffect, useMemo, useState, useRef } from 'react';
 import DemoTrading from './DemoTrading';
 import MarketEngine from './MarketEngine';
 import {
@@ -250,8 +250,9 @@ useEffect(() => {
 
       console.log('PipSmart: Banner request sent');
     } catch (error) {
-      console.error('PipSmart AdMob error:', error);
-    }
+  console.error('PipSmart AdMob error:', error);
+  alert('PipSmart AdMob error: ' + String(error));
+    } 
   }, 1500);
 
   return () => window.clearTimeout(timer);
