@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PipSmart Privacy Policy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.7;
+      color: #222;
+    }
+    h1, h2 { color: #087f5b; }
+  </style>
+</head>
+<body>
+  <h1>PipSmart Privacy Policy</h1>
+  <p><strong>Last updated:</strong> 7 November 2026</p>
+
+  <h2>1. Introduction</h2>
+  <p>PipSmart respects your privacy. This policy explains how information is handled when you use our Forex education and demo-trading application.</p>
+
+  <h2>2. Information We Collect</h2>
+  <p>Depending on the features you use, we may collect account information such as your name and email address, login information, app usage information, educational progress, demo-trading activity, and technical device information.</p>
+
+  <h2>3. How We Use Information</h2>
+  <p>We use information to provide account access, deliver educational content, operate demo-trading features, improve our services, maintain security, troubleshoot problems, and support advertising.</p>
+
+  <h2>4. Advertising and Google AdMob</h2>
+  <p>PipSmart may display advertisements through Google AdMob. Google and its advertising partners may use device information, advertising identifiers, and similar technologies to serve and measure advertisements, subject to applicable settings and laws.</p>
+  <p>Learn more: <a href="https://policies.google.com/technologies/ads">Google Advertising Policies</a>.</p>
+
+  <h2>5. Third-Party Services</h2>
+  <p>We may use third-party services for advertising, authentication, market information, and app functionality. Those providers handle information under their own privacy policies.</p>
+
+  <h2>6. Data Security</h2>
+  <p>We take reasonable steps to protect information. However, no electronic storage or transmission method is completely secure.</p>
+
+  <h2>7. Children's Privacy</h2>
+  <p>PipSmart is not intended for children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+  <h2>8. Your Privacy Choices</h2>
+  <p>Depending on your location and applicable law, you may have rights to access, correct, or request deletion of your personal information and manage advertising consent.</p>
+
+  <h2>9. Policy Updates</h2>
+  <p>We may update this policy as our services or legal requirements change. Updates will be published on this page.</p>
+
+  <h2>10. Contact Us</h2>
+  <p>For privacy questions or requests, contact the PipSmart support team at the official support email published in the app or on our website.</p>
+</body>
+</html>
