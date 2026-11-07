@@ -201,7 +201,7 @@ function App() {
       const admobStarted = useRef(false);
 
   
-useEffect(() => {,alert('PipSmart AdMob diagnostic started'); 
+useEffect(() => {alert('PipSmart AdMob diagnostic started'); 
   if (!Capacitor.isNativePlatform() || admobStarted.current) return;
 
   const timer = window.setTimeout(async () => {
