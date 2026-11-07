@@ -23,8 +23,9 @@ import { Capacitor } from '@capacitor/core';
 import {
   AdMob,
   AdmobConsentStatus,
-  BannerAdPosition,
+    BannerAdPosition,
   BannerAdSize,
+  BannerAdPluginEvents,
 } from '@capacitor-community/admob';
 type Trade = {
   id: number;
@@ -199,48 +200,61 @@ function App() {
   
       const admobStarted = useRef(false);
 
-  useEffect(() => {
-    if (!Capacitor.isNativePlatform() || admobStarted.current) return;
+  
+useEffect(() => {
+  if (!Capacitor.isNativePlatform() || admobStarted.current) return;
 
-    const timer = window.setTimeout(async () => {
-      if (admobStarted.current) return;
-      admobStarted.current = true;
+  const timer = window.setTimeout(async () => {
+    if (admobStarted.current) return;
+    admobStarted.current = true;
 
-      try {
-        console.log('PipSmart: Starting AdMob');
+    try {
+      console.log('PipSmart: Starting AdMob');
 
-        let consentInfo = await AdMob.requestConsentInfo();
+      let consentInfo = await AdMob.requestConsentInfo();
 
-        if (
-          consentInfo.isConsentFormAvailable &&
-          consentInfo.status === AdmobConsentStatus.REQUIRED
-        ) {
-          consentInfo = await AdMob.showConsentForm();
-        }
+      console.log('PipSmart consent:', consentInfo);
 
-        if (!consentInfo.canRequestAds) {
-          console.log('PipSmart: Ads cannot be requested yet');
-          return;
-        }
-
-        await AdMob.initialize();
-
-        await AdMob.showBanner({
-          adId: 'ca-app-pub-3940256099942544/6300978111',
-          adSize: BannerAdSize.ADAPTIVE_BANNER,
-          position: BannerAdPosition.BOTTOM_CENTER,
-          margin: 0,
-          isTesting: true,
-        });
-
-        console.log('PipSmart: Banner request sent');
-      } catch (error) {
-        console.error('PipSmart AdMob error:', error);
+      if (
+        consentInfo.isConsentFormAvailable &&
+        consentInfo.status === AdmobConsentStatus.REQUIRED
+      ) {
+        consentInfo = await AdMob.showConsentForm();
       }
-    }, 1500);
 
-    return () => window.clearTimeout(timer);
-  }, []);
+      if (!consentInfo.canRequestAds) {
+        console.log('PipSmart: Consent prevents ad requests');
+        return;
+      }
+
+      await AdMob.initialize();
+
+      await AdMob.addListener(
+        BannerAdPluginEvents.Loaded,
+        () => console.log('PipSmart: Banner loaded successfully')
+      );
+
+      await AdMob.addListener(
+        BannerAdPluginEvents.FailedToLoad,
+        (error) => console.error('PipSmart: Banner failed:', error)
+      );
+
+      await AdMob.showBanner({
+        adId: 'ca-app-pub-3940256099942544/6300978111',
+        adSize: BannerAdSize.ADAPTIVE_BANNER,
+        position: BannerAdPosition.BOTTOM_CENTER,
+        margin: 0,
+        isTesting: true,
+      });
+
+      console.log('PipSmart: Banner request sent');
+    } catch (error) {
+      console.error('PipSmart AdMob error:', error);
+    }
+  }, 1500);
+
+  return () => window.clearTimeout(timer);
+}, []);
 
   const [tab, setTab] = useState<Tab>('Overview');
 
